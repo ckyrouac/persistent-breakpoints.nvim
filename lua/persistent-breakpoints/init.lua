@@ -11,6 +11,13 @@ M.setup = function(_cfg)
 		cfg[key] = val
 	end
 	inmem_bps.bps = utils.load_bps(utils.get_bps_path()) -- {'filename':breakpoints_table}
+
+	vim.schedule(function ()
+		for file in pairs(inmem_bps.bps) do
+			vim.cmd.edit(file)
+		end
+	end)
+
 	utils.create_path(cfg.save_dir)
 	if tmp_config.load_breakpoints_event ~= nil then
 		local aug = vim.api.nvim_create_augroup("persistent-breakpoints-load-breakpoint", {
