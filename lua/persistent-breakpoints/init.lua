@@ -12,9 +12,12 @@ M.setup = function(_cfg)
 	end
 	inmem_bps.bps = utils.load_bps(utils.get_bps_path()) -- {'filename':breakpoints_table}
 
+	-- load all buffers with a breakpoint set
 	vim.schedule(function ()
-		for file in pairs(inmem_bps.bps) do
-			vim.cmd.edit(file)
+		if vim.bo.filetype ~= "gitcommit" then
+			for file in pairs(inmem_bps.bps) do
+				vim.cmd.edit(file)
+			end
 		end
 	end)
 
